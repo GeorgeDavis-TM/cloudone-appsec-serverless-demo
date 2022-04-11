@@ -46,9 +46,6 @@ def main(event, context):
     policyObj.addIllegalFileAccessPolicy(createGroupResponse["groupId"], currentIllegalFileAccessPolicyDict)
     policyObj.addRCEPolicy(createGroupResponse["groupId"], currentRCEPolicyDict)
 
-    print(str(policyObj.getIllegalFileAccessPolicy(createGroupResponse["groupId"])))
-    print(str(policyObj.getRCEPolicy(createGroupResponse["groupId"])))
-
     body = {
         "message": "Go Serverless v3.0! Your function executed successfully!",
         "input": event,
