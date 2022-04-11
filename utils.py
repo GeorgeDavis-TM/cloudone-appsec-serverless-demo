@@ -6,6 +6,7 @@ class Utils:
 
     def __init__(self):
 
+        self.c1asSecurityGroupName = str(os.environ.get("c1asSecurityGroupName"))
         self.c1asApiAuthToken = str(os.environ.get("c1asApiAuthToken"))
 
         self.httpHeaders = {

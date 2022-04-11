@@ -12,8 +12,8 @@ class Groups:
     def createNewGroup(self):
 
         body = {
-            "name": "CloudOneServerlessDemo-MgmtApis"
-        }        
+            "name": self.utilsObj.c1asSecurityGroupName
+        }       
 
         r = self.utilsObj.httpObj.request('POST', self.utilsObj.baseUrl + '/accounts/groups', body=json.dumps(body))
         

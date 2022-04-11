@@ -29,6 +29,7 @@ provider:
     TREND_AP_KEY: ${self:custom.stages.${opt:stage, self:custom.defaultStage}.trend_app_protect_key}
     TREND_AP_SECRET: ${self:custom.stages.${opt:stage, self:custom.defaultStage}.trend_app_protect_secret}
     awsDeployRegion: ${self:custom.stages.${opt:stage, self:custom.defaultStage}.aws_region}
+    c1asSecurityGroupName: CloudOneServerlessDemo-MgmtApis
     c1asApiAuthToken: tmc**********************:7Kf**************************************************************RE
   tags:
     BusinessCase: CloudOne-AppSec-Serverless-Demo
