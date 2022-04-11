@@ -27,8 +27,9 @@ provider:
   environment:
     AWS_LAMBDA_EXEC_WRAPPER: /opt/trend_app_protect
     TREND_AP_KEY: ${self:custom.stages.${opt:stage, self:custom.defaultStage}.trend_app_protect_key}
-    TREND_AP_SECRET: ${self:custom.stages.${opt:stage, self:custom.defaultStage}.trend_app_protect_secret}   
-    c1asApiAuthToken: tmc**********************:7Kf**************************************************************RE 
+    TREND_AP_SECRET: ${self:custom.stages.${opt:stage, self:custom.defaultStage}.trend_app_protect_secret}
+    awsDeployRegion: ${self:custom.stages.${opt:stage, self:custom.defaultStage}.aws_region}
+    c1asApiAuthToken: tmc**********************:7Kf**************************************************************RE
   tags:
     BusinessCase: CloudOne-AppSec-Serverless-Demo
     Owner: TrendMicro
