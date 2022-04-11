@@ -38,6 +38,17 @@ provider:
     BusinessCase: CloudOne-AppSec-Serverless-Demo
     Owner: TrendMicro
     CodeSource: https://github.com/GeorgeDavis-TM/cloudone-appsec-serverless-demo.git
+  iam:
+    role:
+      name: cloudone-appsec-serverless-demo
+      path: /
+      statements:
+        - Effect: 'Allow'
+          Resource: '*'
+          Action: 
+            - 'ssm:PutParameter'
+      tags:
+        BusinessCase: CloudOne-AppSec-Serverless-Demo
 
 functions:
   main:
