@@ -1,0 +1,46 @@
+org: georgedavis
+app: cloudone-appsec-serverless-demo
+service: cloudone-appsec-serverless-demo
+
+frameworkVersion: '3'
+
+custom:
+  defaultStage: dev
+  stages:
+    dev:
+      aws_region: us-east-2
+      trend_app_protect_key: f09*****-****-****-****-14********fc
+      trend_app_protect_secret: 011*****-****-****-****-6a********37
+    prod:
+      aws_region: us-east-1
+      trend_app_protect_key: f09*****-****-****-****-14********fc
+      trend_app_protect_secret: 011*****-****-****-****-6a********37
+
+provider:
+  name: aws
+  runtime: python3.8
+  stage: ${opt:stage, self:custom.defaultStage}
+  region: ${self:custom.stages.${opt:stage, self:custom.defaultStage}.aws_region}
+  memorySize: 250
+  timeout: 30
+  logRetentionInDays: 14
+  environment:
+    AWS_LAMBDA_EXEC_WRAPPER: /opt/trend_app_protect
+    TREND_AP_KEY: ${self:custom.stages.${opt:stage, self:custom.defaultStage}.trend_app_protect_key}
+    TREND_AP_SECRET: ${self:custom.stages.${opt:stage, self:custom.defaultStage}.trend_app_protect_secret}   
+    c1asApiAuthToken: tmc**********************:7Kf**************************************************************RE 
+  tags:
+    BusinessCase: Serverless-TrendMicro-AppSec
+    Owner: TrendMicro
+    CodeSource: https://github.com/GeorgeDavis-TM/cloudone-appsec-serverless-demo.git
+  stackTags:
+    BusinessCase: Serverless-TrendMicro-AppSec
+    Owner: TrendMicro
+    CodeSource: https://github.com/GeorgeDavis-TM/cloudone-appsec-serverless-demo.git
+
+functions:
+  main:
+    handler: handler.main
+    description: Python Demo to add Trend Micro Application Security to Serverless framework functions
+    layers:
+      - arn:aws:lambda:${self:custom.stages.${opt:stage, self:custom.defaultStage}.aws_region}:800880067056:layer:CloudOne-ApplicationSecurity-python:1
