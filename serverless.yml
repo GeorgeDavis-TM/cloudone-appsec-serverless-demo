@@ -30,11 +30,11 @@ provider:
     TREND_AP_SECRET: ${self:custom.stages.${opt:stage, self:custom.defaultStage}.trend_app_protect_secret}   
     c1asApiAuthToken: tmc**********************:7Kf**************************************************************RE 
   tags:
-    BusinessCase: Serverless-TrendMicro-AppSec
+    BusinessCase: CloudOne-AppSec-Serverless-Demo
     Owner: TrendMicro
     CodeSource: https://github.com/GeorgeDavis-TM/cloudone-appsec-serverless-demo.git
   stackTags:
-    BusinessCase: Serverless-TrendMicro-AppSec
+    BusinessCase: CloudOne-AppSec-Serverless-Demo
     Owner: TrendMicro
     CodeSource: https://github.com/GeorgeDavis-TM/cloudone-appsec-serverless-demo.git
 
