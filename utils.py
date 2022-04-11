@@ -2,12 +2,23 @@ import json
 import os
 import urllib3
 
+import boto3
+
 class Utils:
 
     def __init__(self):
 
+        self.awsDeployRegion = str(os.environ.get("awsDeployRegion"))
+
+        self.ssmClient = boto3.client('ssm', region_name=self.awsDeployRegion)
+
         self.c1asSecurityGroupName = str(os.environ.get("c1asSecurityGroupName"))
         self.c1asApiAuthToken = str(os.environ.get("c1asApiAuthToken"))
+
+        if "ssm:" in self.c1asApiAuthToken:
+            ssmParamKey = self.c1asApiAuthToken.split('ssm:')[1]
+            if self.getAwsSsmParameter(ssmParamKey):
+                self.c1asApiAuthToken = self.getAwsSsmParameter(ssmParamKey)
 
         self.httpHeaders = {
             'Content-Type': 'application/json;charset=utf-8',
@@ -51,3 +62,18 @@ class Utils:
         elif statusCode == 422:
             raise Exception("Error 422: Unprocessable Entity.")
         return False
+
+    # Retrieve SSM Parameter value based on parameter key passed.
+    def getAwsSsmParameter(self, paramKey):
+        
+        print("Fetching SSM Parameter value from AWS...")  
+        parameter = self.ssmClient.get_parameter(Name=paramKey, WithDecryption=True)
+
+        return parameter ['Parameter']['Value']
+
+    # Store SSM Parameter key and value on the AWS backend for future use.
+    def setAwsSsmParameter(self, paramKey, paramValue):        
+        
+        parameter = self.ssmClient.put_parameter(Name=paramKey, Value=paramValue, Type='String', Overwrite=True)
+
+        print(str(parameter))

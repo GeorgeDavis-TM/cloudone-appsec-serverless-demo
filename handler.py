@@ -4,8 +4,6 @@ import logging
 import time
 import os
 
-import boto3
-
 from groups import Groups
 from policies import Policies
 from utils import Utils
@@ -13,26 +11,16 @@ from utils import Utils
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-# Store SSM Parameter key and value on the AWS backend for future use.
-def setAWSSSMParameter(awsRegion, paramKey, paramValue):
-
-    ssmClient = boto3.client('ssm', region_name=awsRegion)
+def main(event, context):    
     
-    parameter = ssmClient.put_parameter(Name=paramKey, Value=paramValue, Type='String', Overwrite=True)
-
-    print(str(parameter))
-
-def main(event, context):
-
-    awsDeployRegion = str(os.environ.get("awsDeployRegion"))
-    
+    utilsObj = Utils()
     groupsObj = Groups()
 
     createGroupResponse = groupsObj.createNewGroup()
     # print(str(createGroupResponse))
 
-    setAWSSSMParameter(awsDeployRegion, "TREND_AP_KEY", createGroupResponse["apiCredsKey"])
-    setAWSSSMParameter(awsDeployRegion, "TREND_AP_SECRET", createGroupResponse["apiCredsSecret"])
+    utilsObj.setAwsSsmParameter("TREND_AP_KEY", createGroupResponse["apiCredsKey"])
+    utilsObj.setAwsSsmParameter("TREND_AP_SECRET", createGroupResponse["apiCredsSecret"])
 
     time.sleep(5)
 

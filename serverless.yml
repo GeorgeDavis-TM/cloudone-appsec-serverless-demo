@@ -30,7 +30,7 @@ provider:
     TREND_AP_SECRET: ${self:custom.stages.${opt:stage, self:custom.defaultStage}.trend_app_protect_secret}
     awsDeployRegion: ${self:custom.stages.${opt:stage, self:custom.defaultStage}.aws_region}
     c1asSecurityGroupName: CloudOneServerlessDemo-MgmtApis
-    c1asApiAuthToken: tmc**********************:7Kf**************************************************************RE
+    c1asApiAuthToken: ssm:WSApiKey
   tags:
     BusinessCase: CloudOne-AppSec-Serverless-Demo
     Owner: TrendMicro
@@ -47,6 +47,7 @@ provider:
         - Effect: 'Allow'
           Resource: '*'
           Action: 
+            - 'ssm:GetParameter'
             - 'ssm:PutParameter'
       tags:
         BusinessCase: CloudOne-AppSec-Serverless-Demo
